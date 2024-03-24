@@ -1,37 +1,20 @@
-version: "3.7"
+version: "3.9"
 services: 
 
   db:
-    image: mariadb:10
-    container_name: wp-60sec-db
+    image: mariadb:latest
+    container_name: wp-db
     environment:
       MYSQL_DATABASE: "${MYSQL_DATABASE}"
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-    # command:
-    # - --config.my-cnf /etc/.mysqld_exporter.cnf
-    # - --collect.global_status
-    # - --collect.info_schema.innodb_metrics
-    # - --collect.auto_increment.columns
-    # - --collect.info_schema.processlist
-    # - --collect.binlog_size
-    # - --collect.info_schema.tablestats
-    # - --collect.global_variables
-    # - --collect.info_schema.query_response_time
-    # - --collect.info_schema.userstats
-    # - --collect.info_schema.tables
-    # - --collect.perf_schema.tablelocks
-    # - --collect.perf_schema.file_events
-    # - --collect.perf_schema.eventswaits
-    # - --collect.perf_schema.indexiowaits
-    # - --collect.perf_schema.tableiowaits 
-    # - --collect.slave_status 
-    # - --web.listen-address=0.0.0.0:9104
+      volumes:
+        - wp_db:/var/lib/mysql
   
   wordpress-fpm:
     image: wordpress:5-fpm-alpine
-    container_name: wp-60sec-fpm
+    container_name: wp-fpm
     links:
       - db
     volumes:
@@ -44,11 +27,11 @@ services:
   
   nginx:
     image: nginx:alpine
-    container_name: wp-60sec-nginx
+    container_name: wp-nginx
     depends_on: 
       - wordpress-fpm
     ports:
-      - 8085:80
+      - 80:80
     volumes:
       - ./conf.d:/etc/nginx/conf.d
       - wp_files:/var/www/html
@@ -61,8 +44,10 @@ services:
     hostname: prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
-    ports:
-      - 9090:9090
+    # ports:
+    #   - 9090:9090
+    expose:
+      - "9090"
     restart: always
     environment:
       TZ: "Europe/Moscow"
@@ -80,8 +65,10 @@ services:
       - --path.sysfs=/host/sys
       - --collector.filesystem.ignored-mount-points
       - ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)
-    ports:
-      - 9100:9100
+    #ports:
+    #  - 9100:9100
+    expose:
+      - "9100"
     restart: unless-stopped
     environment:
       TZ: "Europe/Moscow"
@@ -90,8 +77,10 @@ services:
     image: quay.io/prometheus/mysqld-exporter
     container_name: mysqld-exporter
     restart: unless-stopped
-    ports:
-     - 9104:9104
+    #ports:
+    # - 9104:9104
+    expose:
+    - "9104"
     command:
      - "--mysqld.username=${WORDPRESS_DB_USER}:${WORDPRESS_DB_PASSWORD}"
      - "--mysqld.address=${WORDPRESS_DB_HOST}:3306"
@@ -101,8 +90,10 @@ services:
     user: root
     depends_on:
       - prometheus
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
+    expose:
+      - "3000"
     volumes:
       - ./grafana:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
@@ -113,4 +104,5 @@ services:
       TZ: "Europe/Moscow"
 
 volumes: 
-  wp_files: 
+  wp_files:
+  wp_db:
