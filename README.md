@@ -33,5 +33,7 @@ docker compose up -d
 ```
 ## Инициализация DB Wordpress
 http://wp.local
-### Gragana URL
+## Gragana URL
 http://metrics.local
+### Dashboard
+Файлы Dashboard лежат ./templates
