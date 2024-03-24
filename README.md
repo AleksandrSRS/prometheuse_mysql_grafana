@@ -1,7 +1,7 @@
 # A first-level headingprometheuse_mysql_grafana
 ## Установка прокекта
 > git clone  https://github.com/AleksandrSRS/prometheuse_mysql_grafana.git
-cd prometheuse_mysql_grafana
+> cd prometheuse_mysql_grafana
 cat <<EOF >>brightup.sh
 #!/bin/sh
 MYSQL_DATABASE=dbwordpress
