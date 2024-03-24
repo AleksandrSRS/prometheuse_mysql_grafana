@@ -9,8 +9,8 @@ services:
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      volumes:
-        - wp_db:/var/lib/mysql
+    volumes:
+      - wp_db:/var/lib/mysql
   
   wordpress-fpm:
     image: wordpress:5-fpm-alpine
