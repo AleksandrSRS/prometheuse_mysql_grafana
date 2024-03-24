@@ -1,7 +1,7 @@
 # A first-level headingprometheuse_mysql_grafana
 ## Подготовка
 
-```
+
 Заполнить файл hosts в зависимости от вашей ОС
 ```
 XXX.XXX.XXX.XXX		wp.local #URL - Wordpress -> /conf.d/nginx.conf
