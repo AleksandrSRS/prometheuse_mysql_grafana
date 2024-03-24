@@ -15,7 +15,6 @@ cd prometheuse_mysql_grafana
 Внесите изменеие
 ```
 cat <<EOF >>.env
-#!/bin/sh
 MYSQL_DATABASE=dbwordpress
 MYSQL_USER=wpuser
 MYSQL_PASSWORD=wppassword
