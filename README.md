@@ -2,7 +2,7 @@
 ## Подготовка
 
 
-Заполнить файл hosts в зависимости от вашей ОС
+## Заполнить файл hosts в зависимости от вашей ОС
 ```
 XXX.XXX.XXX.XXX		wp.local #URL - Wordpress -> /conf.d/nginx.conf
 XXX.XXX.XXX.XXX		metrics.local #URL - Grafana -> /conf.d/nginx.conf
@@ -13,7 +13,7 @@ XXX.XXX.XXX.XXX		metrics.local #URL - Grafana -> /conf.d/nginx.conf
 git clone  https://github.com/AleksandrSRS/prometheuse_mysql_grafana.git
 cd prometheuse_mysql_grafana
 ```
-Внесите изменеие
+## Внесите изменений
 ```
 cat <<EOF >>.env
 MYSQL_DATABASE=dbwordpress
