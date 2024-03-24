@@ -1,9 +1,20 @@
 # A first-level headingprometheuse_mysql_grafana
+## Подготовка
+
+```
+Заполнить файл hosts в зависимости от вашей ОС
+XXX.XXX.XXX.XXX		wp.local #URL - Wordpress -> /conf.d/nginx.conf
+XXX.XXX.XXX.XXX		metrics.local #URL - Grafana -> /conf.d/nginx.conf
+```
+
 ## Установка прокекта
 ```
 git clone  https://github.com/AleksandrSRS/prometheuse_mysql_grafana.git
 cd prometheuse_mysql_grafana
-cat <<EOF >>brightup.sh
+```
+Внесите изменеие
+```
+cat <<EOF >>.env
 #!/bin/sh
 MYSQL_DATABASE=dbwordpress
 MYSQL_USER=wpuser
@@ -16,5 +27,11 @@ WORDPRESS_DB_USER=wpuser
 WORDPRESS_DB_PASSWORD=wppassword
 EOF
 ```
-## A second-level heading
-### A third-level heading
+## Запуск
+```
+docker compose up -d
+```
+## Инициализация DB Wordpress
+http://wp.local
+### Gragana URL
+http://metrics.local
